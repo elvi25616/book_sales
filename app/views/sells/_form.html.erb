@@ -1,0 +1,37 @@
+<%= turbo_frame_tag 'new_record_component' do %>
+  <div class="flex w-full items-center">
+
+    <%= form_with(model: sell, class: 'flex w-full items-center gap-2') do |form| %>
+    <% if sell.errors.any? %>
+      <% sell.errors.each do |error| %>
+        <span class="text-white"><%= error.full_message %></span>
+      <% end %>
+    <% end %>
+
+    <div class="flex items-center gap-2">
+        <%= form.label :book_id, 'Select book:', class: 'font-semibold text-white' %>
+        <%= form.select(:book_id, Book.all.collect {|book|[book.name, book.id]}, {include_blank: true},
+        class: 'font-semibold rounded p-2 text-xs'
+        )%>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <%= form.label :quantity, class: 'font-semibold text-white' %>
+      <%= form.number_field :quantity, class: 'font-semibold rounded p-2 text-xs' %>
+    </div>
+
+    <div class="flex items-center gap-2">
+        <%= form.label :day, 'Select day:', class: 'font-semibold text-white' %>
+        <%= form.select(:day, Sell::DAYS.map {|day| [day.humanize, day]}, {include_blank: true},
+        class: 'font-semibold rounded p-2 text-xs'
+        )%>
+    </div>
+
+    
+    <div class="flex itemse-center justify-end gap-2 ml-5">
+      <%= form.submit class: 'font-semibold p-2 bg-sky-600 text-sm text-white rounded' %>
+      <%= link_to 'Cancel', :back, class:'font-semibold p-2 bg-red-600 text-sm text-white rounded' %>
+    </div>
+  <% end %>
+  </div>
+<% end %>
